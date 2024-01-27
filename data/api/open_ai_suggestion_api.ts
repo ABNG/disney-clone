@@ -1,12 +1,24 @@
 "use server";
 
 import OpenAI from "openai";
+import { redis } from "@/lib/redis_db";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function movieSuggestion(term: string) {
+  try {
+    const result = await redis.get(`disney:${term.trim()}`);
+    if (result) {
+      return {
+        from: "redis-cache",
+        body: result,
+      };
+    }
+  } catch (err) {
+    console.log(`from redis: ${err}`);
+  }
   const movieSuggestionCompletion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
@@ -19,7 +31,16 @@ export async function movieSuggestion(term: string) {
     ],
   });
   console.log(movieSuggestionCompletion.choices[0].message?.content);
+  if (movieSuggestionCompletion.choices[0].message?.content) {
+    await redis.set(
+      `disney:${term.trim()}`,
+      movieSuggestionCompletion.choices[0].message.content,
+      "EX",
+      60 * 60 * 24
+    );
+  }
   return {
+    from: "openAI",
     body:
       movieSuggestionCompletion.choices[0].message?.content || "No Suggestion",
   };

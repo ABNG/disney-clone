@@ -36,7 +36,10 @@ const AISuggestions = ({ term }: Props) => {
       <>
         <div className="animate-pulse rounded-full bg-gradient-to-t from-white h-10 w-10 border-2 flex-shrink-0 border-white" />
         <div>
-          <p className="text-sm text-gray-400">AI Assistant suggestions: </p>
+          <p className="text-sm text-gray-400">
+            AI Assistant suggestions:{" "}
+            <span className="text-cyan-500">[{data.from}]</span>{" "}
+          </p>
           <p className="italic text-xl">{data.body}</p>
         </div>
       </>
