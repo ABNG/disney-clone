@@ -18,16 +18,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    serverActions: {
-      allowedOrigins: [
-        "abcdinfo.store",
-        "*.abcdinfo.store",
-        "localhost",
-        "localhost:8080",
-      ],
-    },
-  },
 };
 
 module.exports = nextConfig;
