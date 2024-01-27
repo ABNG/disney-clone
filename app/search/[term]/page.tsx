@@ -21,7 +21,7 @@ const SearchPage = async ({ params: { term } }: Props) => {
         <h1 className="text-6xl font-bold px-10">Result for "{termToUse}"</h1>
 
         {/* AI suggestion Client Component */}
-        {/* <AISuggestions term={termToUse} /> */}
+        <AISuggestions term={termToUse} />
 
         <MoviesCarousal title="Movies" movies={searchMovies} isVertical />
         <MoviesCarousal title="You May Also Like" movies={popularMovies} />
