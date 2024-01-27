@@ -15,7 +15,7 @@ const Header = (props: Props) => {
           alt="Disney Logo"
           width={120}
           height={100}
-          className="dark:invert"
+          className="invert"
         />
       </Link>
       <div className="flex gap-2 items-center">
